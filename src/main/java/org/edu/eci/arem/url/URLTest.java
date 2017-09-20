@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Kevin
+ * @author KevinMendieta
  */
 public class URLTest {
     

@@ -18,9 +18,37 @@ import java.util.logging.Logger;
  *
  * @author KevinMendieta
  */
-public class SquaringServer {
+public class MathServer {
+    
+    public static int currentState;
+    public static final int SIN_STATE = 1;
+    public static final int COS_STATE = 2;
+    public static final int TAN_STATE = 3;
+    
+    public static double makeCalc(double number) {
+        double result = 0;
+        if (currentState == SIN_STATE) {
+            result = Math.sin(number);
+        } else if (currentState == COS_STATE) {
+            result = Math.cos(number);
+        } else if (currentState == TAN_STATE) {
+            result = Math.tan(number);
+        }
+        return result;
+    }
+    
+    public static void changeState(String prefix) {
+        if (prefix.equals("sin")) {
+            currentState = SIN_STATE;
+        } else if (prefix.equals("tan")) {
+            currentState = TAN_STATE;
+        } else {
+            currentState = COS_STATE;
+        }
+    }
     
     public static void main(String[] args) throws IOException {
+        currentState = COS_STATE;
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(35000);
@@ -37,11 +65,16 @@ public class SquaringServer {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         String inputLine, outputLine;
         while ((inputLine = in.readLine()) != null) {
-            if(!inputLine.equals("")){
-                outputLine = Integer.parseInt(inputLine) * Integer.parseInt(inputLine) + "";
+            if (!inputLine.equals("")) {
+                if(inputLine.startsWith("fun:")){
+                    changeState(inputLine.substring(4));
+                    outputLine = "Changed to: " + inputLine.substring(4);
+                }else {
+                    outputLine = makeCalc(Double.parseDouble(inputLine)) + "";
+                }
                 out.println(outputLine);
-            }else{
-                out.println("Bye!");
+            } else {
+                out.println("Bye!!");
                 break;
             }            
         }

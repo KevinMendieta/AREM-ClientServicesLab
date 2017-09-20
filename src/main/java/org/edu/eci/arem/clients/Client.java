@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.edu.eci.arem.servers;
+package org.edu.eci.arem.clients;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Kevin
+ * @author KevinMendieta
  */
 public class Client {
     
